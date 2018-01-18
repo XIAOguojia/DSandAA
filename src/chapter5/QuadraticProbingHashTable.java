@@ -49,7 +49,13 @@ public class QuadraticProbingHashTable<Anytype> {
     public int size() {
         return currentSize;
     }
-
+    /**
+     * Test if the QuadraticProbingHashTable is logically empty.
+     * @return true if empty, false otherwise.
+     */
+    public boolean isEmpty(){
+        return currentSize == 0;
+    }
     /**
      * Get length of internal table.
      *
