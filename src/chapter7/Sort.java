@@ -1,13 +1,16 @@
 package chapter7;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by intellij IDEA
  * Author:Raven
  * Date:2018/1/16
  * Time:16:22
+ *
  * @author Raven
  */
 public class Sort {
@@ -294,45 +297,49 @@ public class Sort {
     /**
      * Quick selection algorithm.
      * Places the kth smallest item in a[k-1].
+     *
      * @param a an array of Comparable items.
      * @param k the desired rank (1 is minimum) in the entire array.
      */
-    public static <Anytype extends Comparable<? super Anytype>> Anytype quickSelect(Anytype[] a,int k){
-        quickSelect(a,0,a.length-1,k);
-        return a[k-1];
+    public static <Anytype extends Comparable<? super Anytype>> Anytype quickSelect(Anytype[] a, int k) {
+        quickSelect(a, 0, a.length - 1, k);
+        return a[k - 1];
     }
 
     /**
      * Internal selection method that makes recursive calls.
      * Uses median-of-three partitioning and a cutoff of 10.
      * Places the kth smallest item in a[k-1].
-     * @param a an array of Comparable items.
-     * @param left the left-most index of the subarray.
+     *
+     * @param a     an array of Comparable items.
+     * @param left  the left-most index of the subarray.
      * @param right the right-most index of the subarray.
-     * @param k the desired index (1 is minimum) in the entire array.
+     * @param k     the desired index (1 is minimum) in the entire array.
      */
     private static <Anytype extends Comparable<? super Anytype>> void quickSelect(Anytype[] a, int left, int right, int k) {
-        if (left+CUTOFF<=right){
-            Anytype pivot = median3(a,left,right);
-            int i = left,j = right-1;
-            for (;;){
-                while (a[++i].compareTo(pivot)<0){}
-                while (a[--j].compareTo(pivot)>0){}
-                if (i<j){
-                    swapReference(a,i,j);
-                }else {
+        if (left + CUTOFF <= right) {
+            Anytype pivot = median3(a, left, right);
+            int i = left, j = right - 1;
+            for (; ; ) {
+                while (a[++i].compareTo(pivot) < 0) {
+                }
+                while (a[--j].compareTo(pivot) > 0) {
+                }
+                if (i < j) {
+                    swapReference(a, i, j);
+                } else {
                     break;
                 }
 
             }
-            swapReference(a,i,right-1);
-            if (k <=i){
-                quickSelect(a,left,i-1,k);
-            }else {
-                quickSelect(a,i+1,right,k);
+            swapReference(a, i, right - 1);
+            if (k <= i) {
+                quickSelect(a, left, i - 1, k);
+            } else {
+                quickSelect(a, i + 1, right, k);
             }
-        }else{
-            insertionSort(a,left,right);
+        } else {
+            insertionSort(a, left, right);
         }
     }
 
@@ -344,14 +351,72 @@ public class Sort {
 //        Sort.test2();
 //        Sort.test3();
 //        Sort.test4();
-        Sort.test5();
+//        Sort.test5();
+        List<String> lst = new ArrayList<>();
+        final int LEN = 3;
+        Random r = new Random();
+
+        for (int i = 0; i < 10000; i++) {
+            String str = "";
+            int len = LEN;
+            for (int j = 0; j < len; j++) {
+                str += (char) ('a' + r.nextInt(26));
+            }
+            lst.add(str);
+        }
+
+        String[] arr1 = new String[lst.size()];
+        String[] arr2 = new String[lst.size()];
+        lst.toArray(arr1);
+        lst.toArray(arr2);
+
+//        System.out.println("排序前：");
+//        for (int i = 0; i < arr1.length; i++) {
+//            System.out.print(arr1[i]+"  ");
+//        }
+//        System.out.println();
+//        RadixSort.radixSortA(arr1,LEN);
+//        RadixSort.countingRadixSort(arr1,LEN);
+//        System.out.println("排序后：");
+//        for (int i = 0; i < arr1.length; i++) {
+//            System.out.print(arr1[i]+"  ");
+//        }
+
+        long start, end;
+        start = System.currentTimeMillis();
+        Arrays.sort(arr1);
+        end = System.currentTimeMillis();
+        System.out.println("Arrays sort time:" + (end - start));
+
+        start = System.currentTimeMillis();
+        RadixSort.radixSortA(arr1,LEN);
+        end = System.currentTimeMillis();
+        System.out.println("Radix sort time:" + (end - start));
+
+        start = System.currentTimeMillis();
+        RadixSort.countingRadixSort(arr1,LEN);
+        end = System.currentTimeMillis();
+        System.out.println("Count sort time:" + (end - start));
+
+        start = System.currentTimeMillis();
+        Sort.mergeSort(arr1);
+        end = System.currentTimeMillis();
+        System.out.println("Merge sort time:" + (end - start));
+
+
+//        for (int i = 0; i < arr1.length; i++) {
+//            if (!arr1[i].equals(arr2[i])) {
+//                System.out.println("bugs:" + i);
+//            }
+//        }
     }
+
 
     private static void test5() {
         Integer[] a = {8, 1, 4, 9, 0, 3, 5, 2, 7, 6};
         show(a);
-     //   Sort.quicksort(a);
-        System.out.println(Sort.quickSelect(a,3));
+        //   Sort.quicksort(a);
+        System.out.println(Sort.quickSelect(a, 3));
         show(a);
     }
 
