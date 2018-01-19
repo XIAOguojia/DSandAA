@@ -297,8 +297,9 @@ public class Sort {
      * @param a an array of Comparable items.
      * @param k the desired rank (1 is minimum) in the entire array.
      */
-    public static <Anytype extends Comparable<? super Anytype>> void quickSelect(Anytype[] a,int k){
+    public static <Anytype extends Comparable<? super Anytype>> Anytype quickSelect(Anytype[] a,int k){
         quickSelect(a,0,a.length-1,k);
+        return a[k-1];
     }
 
     /**
@@ -349,7 +350,8 @@ public class Sort {
     private static void test5() {
         Integer[] a = {8, 1, 4, 9, 0, 3, 5, 2, 7, 6};
         show(a);
-        Sort.quicksort(a);
+     //   Sort.quicksort(a);
+        System.out.println(Sort.quickSelect(a,3));
         show(a);
     }
 
