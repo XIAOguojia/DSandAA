@@ -78,12 +78,58 @@ public class RadixSort {
         }
     }
 
+    /**
+     * Radix sort an array of Strings
+     * Assume all are all ASCII
+     * Assume all have length bounded by maxLen
+     * */
+    public static void radixSort(String[] arr,int maxLen){
+        final int BUCKETS = 256;
+        ArrayList<String>[] wordsByLength = new ArrayList[maxLen+1];
+        ArrayList<String>[] buckets = new ArrayList[BUCKETS];
+
+        for (int i = 0; i < wordsByLength.length; i++) {
+            wordsByLength[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+
+        for (String s : arr){
+            wordsByLength[s.length()].add(s);
+        }
+
+        int idx = 0;
+        for (ArrayList<String> wordList : wordsByLength){
+            for (String s: wordList){
+                arr[idx++] = s;
+            }
+        }
+
+        int startingIndex = arr.length;
+        for (int pos = maxLen -1; pos >= 0; pos--) {
+            startingIndex -= wordsByLength[pos+1].size();
+
+            for (int i = startingIndex; i < arr.length; i++) {
+                buckets[arr[i].charAt(pos)].add(arr[i]);
+            }
+
+            idx = startingIndex;
+            for (ArrayList<String> thisBucket:buckets){
+                for (String s:thisBucket){
+                    arr[idx++] = s;
+                }
+                thisBucket.clear();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         List<String> lst = new ArrayList<>();
         final int LEN = 3;
         Random r = new Random();
 
-        for (int i = 0; i < 10000000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             String str = "";
             int len = LEN;
             for (int j = 0; j < len; j++) {
@@ -104,6 +150,7 @@ public class RadixSort {
 //        System.out.println();
 //        RadixSort.radixSortA(arr1,LEN);
 //        RadixSort.countingRadixSort(arr1,LEN);
+//        RadixSort.radixSort(arr1,LEN);
 //        System.out.println("排序后：");
 //        for (int i = 0; i < arr1.length; i++) {
 //            System.out.print(arr1[i]+"  ");
@@ -124,6 +171,11 @@ public class RadixSort {
         RadixSort.countingRadixSort(arr2, LEN);
         end = System.currentTimeMillis();
         System.out.println("Count sort time:" + (end - start));
+
+        start = System.currentTimeMillis();
+        RadixSort.radixSort(arr2, LEN);
+        end = System.currentTimeMillis();
+        System.out.println("Radix sort time(长度可变):" + (end - start));
 
         for (int i = 0; i < arr1.length; i++) {
             if (!arr1[i].equals(arr2[i])) {
