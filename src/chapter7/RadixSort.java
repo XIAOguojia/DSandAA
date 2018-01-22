@@ -82,10 +82,10 @@ public class RadixSort {
      * Radix sort an array of Strings
      * Assume all are all ASCII
      * Assume all have length bounded by maxLen
-     * */
-    public static void radixSort(String[] arr,int maxLen){
+     */
+    public static void radixSort(String[] arr, int maxLen) {
         final int BUCKETS = 256;
-        ArrayList<String>[] wordsByLength = new ArrayList[maxLen+1];
+        ArrayList<String>[] wordsByLength = new ArrayList[maxLen + 1];
         ArrayList<String>[] buckets = new ArrayList[BUCKETS];
 
         for (int i = 0; i < wordsByLength.length; i++) {
@@ -95,28 +95,28 @@ public class RadixSort {
             buckets[i] = new ArrayList<>();
         }
 
-        for (String s : arr){
+        for (String s : arr) {
             wordsByLength[s.length()].add(s);
         }
 
         int idx = 0;
-        for (ArrayList<String> wordList : wordsByLength){
-            for (String s: wordList){
+        for (ArrayList<String> wordList : wordsByLength) {
+            for (String s : wordList) {
                 arr[idx++] = s;
             }
         }
 
         int startingIndex = arr.length;
-        for (int pos = maxLen -1; pos >= 0; pos--) {
-            startingIndex -= wordsByLength[pos+1].size();
+        for (int pos = maxLen - 1; pos >= 0; pos--) {
+            startingIndex -= wordsByLength[pos + 1].size();
 
             for (int i = startingIndex; i < arr.length; i++) {
                 buckets[arr[i].charAt(pos)].add(arr[i]);
             }
 
             idx = startingIndex;
-            for (ArrayList<String> thisBucket:buckets){
-                for (String s:thisBucket){
+            for (ArrayList<String> thisBucket : buckets) {
+                for (String s : thisBucket) {
                     arr[idx++] = s;
                 }
                 thisBucket.clear();
