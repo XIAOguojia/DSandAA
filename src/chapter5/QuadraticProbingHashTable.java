@@ -49,13 +49,16 @@ public class QuadraticProbingHashTable<Anytype> {
     public int size() {
         return currentSize;
     }
+
     /**
      * Test if the QuadraticProbingHashTable is logically empty.
+     *
      * @return true if empty, false otherwise.
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return currentSize == 0;
     }
+
     /**
      * Get length of internal table.
      *
@@ -64,8 +67,10 @@ public class QuadraticProbingHashTable<Anytype> {
     public int capacity() {
         return array.length;
     }
+
     /**
      * Internal method to allocate array.
+     *
      * @param size the size of the array.
      */
     private void allocateArray(int size) {
@@ -74,6 +79,7 @@ public class QuadraticProbingHashTable<Anytype> {
 
     /**
      * Internal method to find a prime number at least as large as n.
+     *
      * @param n the starting number (must be positive).
      * @return a prime number larger than or equal to n.
      */
@@ -87,9 +93,11 @@ public class QuadraticProbingHashTable<Anytype> {
         return n;
 
     }
+
     /**
      * Internal method to test if a number is prime.
      * Not an efficient algorithm.
+     *
      * @param n the number to test.
      * @return the result of the test.
      */
@@ -164,6 +172,11 @@ public class QuadraticProbingHashTable<Anytype> {
         return currentPos;
     }
 
+    public Anytype find(Anytype x) {
+        int currentPos = findPos(x);
+        return isActive(currentPos) ? array[currentPos].element : null;
+    }
+
     private int myhash(Anytype x) {
         int hashVal = x.hashCode();
         hashVal %= array.length;
@@ -200,7 +213,7 @@ public class QuadraticProbingHashTable<Anytype> {
      */
     private void rehash() {
         HashEntry<Anytype>[] oldArray = array;
-        allocateArray(2 *oldArray.length+ 1);
+        allocateArray(2 * oldArray.length + 1);
         occupied = 0;
         currentSize = 0;
         for (HashEntry<Anytype> arr : oldArray) {
