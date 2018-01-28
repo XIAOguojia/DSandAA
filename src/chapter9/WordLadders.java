@@ -62,7 +62,7 @@ public class WordLadders {
         theList.toArray(theWords);
 
         for (int i = 0; i < theWords.length; i++) {
-            for (int j = i+1; j < theWords.length; j++) {
+            for (int j = i + 1; j < theWords.length; j++) {
                 if (oneCharOff(theWords[i], theWords[j])) {
                     update(adjWords, theWords[i], theWords[j]);
                     update(adjWords, theWords[j], theWords[i]);
@@ -275,7 +275,5 @@ public class WordLadders {
         List<String> mostChangeable = findMostChangeable(adjacentWords);
         System.out.println("Most changeable computed...");
         printMostChangeableWords(mostChangeable, adjacentWords);
-
-
     }
 }

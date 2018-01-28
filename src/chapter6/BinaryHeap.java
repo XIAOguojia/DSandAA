@@ -98,6 +98,20 @@ public class BinaryHeap<Anytype extends Comparable<? super Anytype>> {
         array[hole] = x;
     }
 
+    /**
+     * 重写insert方法把被插入项的引用放在位置0处
+     */
+    public void insert0(Anytype x) {
+        if (currentSize == array.length - 1) {
+            enlargeArray(array.length * 2 + 1);
+        }
+        int hole = ++currentSize;
+        for (; hole > 1 && x.compareTo(array[hole / 2]) < 0; hole /= 2) {
+            array[hole] = array[hole / 2];
+        }
+        array[0] = array[hole] = x;
+    }
+
     private void enlargeArray(int newSize) {
         Anytype[] old = array;
         array = (Anytype[]) new Comparable[newSize];
