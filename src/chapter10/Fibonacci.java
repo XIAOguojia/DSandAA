@@ -41,12 +41,12 @@ public class Fibonacci {
         long start,end;
 
         start = System.currentTimeMillis();
-        System.out.println(fib(100));
+        System.out.println(fib2(40));
         end = System.currentTimeMillis();
         System.out.println("Time:"+(end-start));
 
         start = System.currentTimeMillis();
-        System.out.println(fib2(100));
+        System.out.println(fib(40));
         end = System.currentTimeMillis();
         System.out.println("Time:"+(end-start));
     }
