@@ -78,7 +78,7 @@ public class Random {
      * @param high the maximum value returned.
      * @return the pseudorandom long.
      */
-    public long randomLong(int low, int high) {
+    public long randomLong(long low, long high) {
         long longVal = ((long) randomInt() << 31) + randomInt();
         long longM = ((long) M << 31) + M;
         double partitionSize = (double) longM / (high - low + 1);
