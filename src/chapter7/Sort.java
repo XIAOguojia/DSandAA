@@ -109,7 +109,7 @@ public class Sort {
      * @param index1 the index of the first object.
      * @param index2 the index of the second object.
      */
-    private static <Anytype> void swapReference(Anytype[] a, int index1, int index2) {
+    public static <Anytype> void swapReference(Anytype[] a, int index1, int index2) {
         Anytype tmp = a[index1];
         a[index1] = a[index2];
         a[index2] = tmp;
