@@ -133,7 +133,8 @@ public class Sort {
      * @param left     the left-most index of the subarray.
      * @param right    the right-most index of the subarray.
      */
-    private static <Anytype extends Comparable<? super Anytype>> void mergeSort(Anytype[] a, Anytype[] tmpArray, int left, int right) {
+    private static <Anytype extends Comparable<? super Anytype>>
+    void mergeSort(Anytype[] a, Anytype[] tmpArray, int left, int right) {
         if (left < right) {
             int center = (left + right) / 2;
             mergeSort(a, tmpArray, left, center);
@@ -141,6 +142,25 @@ public class Sort {
             merge(a, tmpArray, left, center + 1, right);
         }
     }
+
+    /**
+     * 非递归方式实现归并排序
+     */
+    private static <Anytype extends Comparable<? super Anytype>>
+    void mergeSort2(Anytype[] a, Anytype[] tmpArray, int left, int right) {
+        int n = a.length;
+
+        for (int subListSize = 1; subListSize < n; subListSize *= 2) {
+            int part1StartSize = 0;
+            while (subListSize + part1StartSize < n) {
+                int part2StartSize = subListSize + part1StartSize;
+                int part2EndSize = Math.min(n - 1, part2StartSize + subListSize - 1);
+                merge(a, tmpArray, part1StartSize, part2StartSize, part2EndSize);
+                part1StartSize = part2EndSize + 1;
+            }
+        }
+    }
+
 
     /**
      * Internal method that merges two sorted halves of a subarray.
@@ -151,7 +171,8 @@ public class Sort {
      * @param rightPos the index of the start of the second half.
      * @param rightEnd the right-most index of the subarray.
      */
-    private static <Anytype extends Comparable<? super Anytype>> void merge(Anytype[] a, Anytype[] tmpArray, int leftPos, int rightPos, int rightEnd) {
+    private static <Anytype extends Comparable<? super Anytype>>
+    void merge(Anytype[] a, Anytype[] tmpArray, int leftPos, int rightPos, int rightEnd) {
         int leftEnd = rightPos - 1;
         int tmpPos = leftPos;
         int numElements = rightEnd - leftPos + 1;
@@ -389,12 +410,12 @@ public class Sort {
         System.out.println("Arrays sort time:" + (end - start));
 
         start = System.currentTimeMillis();
-        RadixSort.radixSortA(arr1,LEN);
+        RadixSort.radixSortA(arr1, LEN);
         end = System.currentTimeMillis();
         System.out.println("Radix sort time:" + (end - start));
 
         start = System.currentTimeMillis();
-        RadixSort.countingRadixSort(arr1,LEN);
+        RadixSort.countingRadixSort(arr1, LEN);
         end = System.currentTimeMillis();
         System.out.println("Count sort time:" + (end - start));
 
